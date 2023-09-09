@@ -1,0 +1,21 @@
+variable "owner_email" {
+  description = "The email address of the person responsible for the resources."
+  type        = string
+  nullable    = false
+
+  validation {
+    condition     = can(regex("^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$", var.owner_email))
+    error_message = "Should be a valid email address."
+  }
+}
+
+variable "class_name" {
+  description = "The name of the class this was created for."
+  type        = string
+  default     = "Terraform Fundamentals"
+
+  validation {
+    condition     = (length(var.class_name) <= 256)
+    error_message = "AWS limits tag values to 256 characters."
+  }
+}

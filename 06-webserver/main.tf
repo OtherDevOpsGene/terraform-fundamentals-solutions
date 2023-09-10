@@ -10,15 +10,11 @@ module "www" {
   instance_type     = "t4g.nano"
 
   tags = {
-    Name  = "${var.server_name}-${each.key}"
-    Owner = var.owner_email
-    Class = var.class_name
+    Name        = "${var.server_name}-${each.key}"
+    Owner       = var.owner_email
+    Class       = var.class_name
+    Environment = var.environment
   }
-}
-
-output "private_ips_list" {
-  description = "Private IP addresses for the webserver instances."
-  value       = values(module.www)[*].webserver_private_ip
 }
 
 output "private_ips" {

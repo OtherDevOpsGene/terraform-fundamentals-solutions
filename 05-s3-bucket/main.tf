@@ -1,6 +1,6 @@
 module "tfstate-backend" {
   source  = "cloudposse/tfstate-backend/aws"
-  version = "1.1.1"
+  version = "1.3.0"
 
   namespace = var.initials
   name      = var.name

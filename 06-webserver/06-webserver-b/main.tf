@@ -3,7 +3,7 @@ data "aws_availability_zones" "available" {
 }
 
 module "www" {
-  source = "./webserver"
+  source = "./modules/webserver"
 
   for_each          = toset(data.aws_availability_zones.available.names)
   availability_zone = each.key
@@ -17,9 +17,9 @@ module "www" {
   }
 }
 
-output "private_ips" {
-  description = "Private IP addresses by instance."
+output "public_ips" {
+  description = "Public IP addresses by instance."
   value = {
-    for az in keys(module.www) : az => module.www[az].webserver_private_ip
+    for az in keys(module.www) : az => module.www[az].webserver_public_ip
   }
 }

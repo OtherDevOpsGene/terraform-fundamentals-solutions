@@ -8,6 +8,7 @@ module "www" {
   for_each          = toset(data.aws_availability_zones.available.names)
   availability_zone = each.key
   instance_type     = "t4g.nano"
+  keypair_name = module.keypair.key_pair_name
 
   tags = {
     Name        = "${var.server_name}-${each.key}"

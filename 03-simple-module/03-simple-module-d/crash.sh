@@ -2,7 +2,7 @@
 
 aws ec2 describe-instances \
   --filters "Name=availability-zone,Values=us-east-2a" \
-            "Name=tag:Environment,Values=prod" \
+            "Name=tag:Lesson,Values=lesson-03" \
             "Name=instance-state-name,Values=running" \
   --query "Reservations[*].Instances[*].[InstanceId]" \
   --output text | \

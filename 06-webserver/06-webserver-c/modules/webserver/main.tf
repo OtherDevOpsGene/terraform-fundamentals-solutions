@@ -1,10 +1,9 @@
 locals {
   canonical_owner_ids = ["099720109477"]
-  instance_type       = "t4g.nano"
 }
 
 data "aws_ec2_instance_type" "webserver" {
-  instance_type = local.instance_type
+  instance_type = var.instance_type
 }
 
 data "aws_ami" "ubuntu_focal" {
@@ -28,10 +27,10 @@ data "aws_ami" "ubuntu_focal" {
 }
 
 resource "aws_instance" "webserver" {
-  count = 3
-
-  ami           = data.aws_ami.ubuntu_focal.id
-  instance_type = local.instance_type
+  ami               = data.aws_ami.ubuntu_focal.id
+  availability_zone = var.availability_zone
+  instance_type     = var.instance_type
+  key_name = var.keypair_name
 
   ebs_optimized = true
   monitoring    = true
@@ -40,23 +39,18 @@ resource "aws_instance" "webserver" {
     http_tokens = "required"
   }
 
-  tags = {
-    Name  = "${var.server_name}-${count.index}"
-    Owner = var.owner_email
-    Class = var.class_name
+  root_block_device {
+    encrypted = true
   }
+
+  tags = var.tags
 
   lifecycle {
     create_before_destroy = true
   }
 }
 
-output "webserver_public_dns" {
-  description = "Public DNS names of the webserver instances."
-  value       = aws_instance.webserver[*].public_dns
-}
-
-output "third_az" {
-  description = "The AWS AZ of the third new instance."
-  value       = aws_instance.webserver[2].availability_zone
+resource "aws_ec2_instance_state" "running" {
+  instance_id = aws_instance.webserver.id
+  state       = "running"
 }

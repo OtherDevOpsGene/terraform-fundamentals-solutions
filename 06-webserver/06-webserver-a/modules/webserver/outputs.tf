@@ -1,5 +1,5 @@
-output "webserver_private_ip" {
-  description = "Private IP address of the webserver instance."
+output "webserver_public_ip" {
+  description = "Public IP address of the webserver instance."
   value       = aws_instance.webserver.public_ip
 }
 

@@ -3,16 +3,17 @@ data "aws_availability_zones" "available" {
 }
 
 module "www" {
-  source = "./webserver"
+  source = "./modules/webserver"
 
   for_each          = toset(data.aws_availability_zones.available.names)
   availability_zone = each.key
   instance_type     = "t4g.nano"
 
   tags = {
-    Name  = "${var.server_name}-${each.key}"
-    Owner = var.owner_email
-    Class = var.class_name
+    Name   = "${var.server_name}-${each.key}"
+    Owner  = var.owner_email
+    Class  = var.class_name
+    Lesson = "lesson-03"
   }
 }
 

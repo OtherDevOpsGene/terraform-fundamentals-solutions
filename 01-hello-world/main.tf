@@ -2,11 +2,11 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.16.1"
+      version = "~> 5.25.0"
     }
   }
 
-  required_version = ">= 1.5.6"
+  required_version = ">= 1.6.2"
 }
 
 provider "aws" {
@@ -27,7 +27,7 @@ resource "aws_instance" "hello_world" {
 
   tags = {
     Name  = "hello_world"
-    Owner = "otherdevopsgene@portinfo.com"
+    Owner = "gene@otherdevopsgene.dev"
     Class = "Terraform Fundamentals"
   }
 }

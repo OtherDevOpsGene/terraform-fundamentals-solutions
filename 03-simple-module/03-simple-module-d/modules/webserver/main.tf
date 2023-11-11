@@ -49,3 +49,8 @@ resource "aws_instance" "webserver" {
     create_before_destroy = true
   }
 }
+
+resource "aws_ec2_instance_state" "running" {
+  instance_id = aws_instance.webserver.id
+  state       = "running"
+}

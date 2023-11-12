@@ -1,2 +1,2 @@
 initials = "GG"
-name     = "06-multi-1111"
+name     = "1111"
